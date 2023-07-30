@@ -1,0 +1,16 @@
+{
+  "name": "ContactAvro",
+  "namespace": "com.kaplan.kafka.demo.kafka.avro.domain",
+  "type": "record",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    },
+    {
+      "name": "contactName",
+      "type": "string"
+    }
+  ]
+
+}

@@ -1,0 +1,15 @@
+{
+"name": "CreateContactEvent",
+"namespace": "com.kaplan.kafka.demo.kafka.avro.domain",
+"type": "record",
+"fields": [
+{
+"name": "commitId",
+"type": "string"
+},
+{
+"name": "contact",
+"type": "ContactAvro"
+}
+]
+}

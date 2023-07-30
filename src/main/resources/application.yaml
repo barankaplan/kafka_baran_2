@@ -1,0 +1,77 @@
+
+spring:
+  profiles:
+    active: kafka
+---
+spring:
+  config:
+    activate:
+      on-profile: kafka
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contexttual_creation: 'true'
+        format_sql: 'true'
+        show_sql: 'true'
+    defer-datasource-initialization: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+    open-in-view: 'true'
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+  datasource:
+    password: kaplan
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+  sql:
+    init:
+      mode: always
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092,localhost:9101
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      transaction-id-prefix: "tnx-id"
+      retries: 3
+
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9101
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      auto-offset-reset: earliest
+      isolation-level: read_committed
+      enable-auto-commit: false
+      group-id: transaction-group
+      properties:
+        specific:
+          avro:
+            reader: 'true'
+    admin:
+      properties:
+        bootstrap.servers: localhost:9092
+
+    properties:
+      schema.registry.url: http://localhost:8081
+      specific:
+        avro:
+          reader: 'true'
+      group-id: abc-listener
+    template:
+      default-topic: create-contact-topic
+
+server:
+  port: '8082'
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+

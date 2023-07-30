@@ -1,0 +1,15 @@
+{
+  "name": "NavisionContactCreateEvent",
+  "namespace": "com.kaplan.kafka.demo.kafka.avro.domain",
+  "type": "record",
+  "fields": [
+    {
+      "name": "commitId",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    }
+  ]
+}
