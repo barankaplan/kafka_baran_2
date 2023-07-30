@@ -2,7 +2,7 @@
 version: '3.6'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.1.0
+    image: confluentinc/cp-zookeeper:7.2.0
     platform: linux/amd64
     hostname: zookeeper
     container_name: zookeeper
@@ -13,14 +13,13 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-server:7.1.0
+    image: confluentinc/cp-server:7.2.0
     platform: linux/amd64
     hostname: broker
     container_name: broker
     depends_on:
       - zookeeper
     ports:
-      - "9092:9092"
       - "9101:9101"
     environment:
       KAFKA_BROKER_ID: 1
@@ -43,7 +42,7 @@ services:
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:7.1.0
+    image: confluentinc/cp-schema-registry:7.2.0
     platform: linux/amd64
     hostname: schema-registry
     container_name: schema-registry
@@ -78,4 +77,4 @@ services:
       - broker
       - schema-registry
     volumes:
-      - "/Users/Shared/debezium-connector-schemaregistry-7.2.5:/kafka/connect/debezium-connector-schemaregistry-7.2.5"
+      - "/Users/barankaplan/Downloads/kafka baran/src/main/resources/connector"
