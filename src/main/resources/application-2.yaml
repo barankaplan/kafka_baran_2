@@ -1,0 +1,56 @@
+spring:
+  kafka:
+    security:
+      protocol: SSL
+    ssl:
+      trust-store-location:
+      trust-store-password:
+      key-store-location:
+      key-store-password:
+      key-password:
+      protocol:
+    template:
+      default-topic: contact-topic
+    producer:
+      bootstrap-servers: strimzi-config-kafka-cluster-kafka-bootstrap.strimzi.svc.cluster.local:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      transaction-id-prefix: "tx-"
+    consumer:
+      bootstrap-servers: strimzi-config-kafka-cluster-kafka-bootstrap.strimzi.svc.cluster.local:9092 #frank
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      auto-offset-reset: earliest
+      isolation-level: read_committed
+      enable-auto-commit: false
+      properties:
+        specific:
+          avro:
+            reader: 'true'
+      group-id: abc-listener
+    properties:
+      schema-registry:
+        url: http://schema-registry.strimzi.svc.cluster.local:8081 # von frank
+        auth:
+          type: basic
+          basic-auth-username: basic-auth-user
+          basic-auth-password: basic-auth-pass
+        ssl:
+          enabled: true
+          truststore_path: "/path/to/schema_registry_truststore"
+          truststore_password: "your_schema_registry_truststore_password"
+          keystore_path: "/path/to/schema_registry_keystore"
+          keystore_password: "your_schema_registry_keystore_password"
+          key_password: "your_schema_registry_key_password"
+        rbac:
+          roles:
+            - name: admin
+              permissions:
+                - "read"
+                - "write"
+                - "create"
+                - "delete"
+            - name: developer
+              permissions:
+                - "read"
+                - "write"
